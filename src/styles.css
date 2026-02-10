@@ -11,7 +11,7 @@ body {
   margin: 0;
   padding: 40px;
   min-height: 100vh;
-  color: #ffffff;
+  color: #e7e1e1;
   background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
     url("https://wallpaper.forfun.com/fetch/87/87356d7fb18211e43c3c68dcebd36de2.jpeg")
       center;
@@ -20,6 +20,25 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
+
+h1 {
+  font-family: "Playfair Display", "Georgia", serif;
+  font-size: 3rem;
+  text-align: center;
+  color: #f8e1c2; /* dorado suave */
+  position: relative;
+  margin-bottom: 40px;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+  border: 2px solid #ffffff;
+  padding: 12px 24px;
+  border-radius: 12px;
+  display: inline-block;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+
+
 
 /* CONTENEDOR PRINCIPAL */
 .app-container {
