@@ -1,0 +1,146 @@
+/* src/styles.css */
+
+/*RESET BÁSICO*/
+* {
+  box-sizing: border-box;
+}
+
+/*BODY*/
+body {
+  font-family: "Playfair Display", "Georgia", serif;
+  margin: 0;
+  padding: 40px;
+  min-height: 100vh;
+  color: #ffffff;
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url("https://wallpaper.forfun.com/fetch/87/87356d7fb18211e43c3c68dcebd36de2.jpeg")
+      center;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* CONTENEDOR PRINCIPAL */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* TITULOS */
+.h1-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 40px 0;
+  width: 100%;
+  text-align: center;
+}
+
+.h1-container h1 {
+  margin: 0;
+  padding: 18px 32px;
+  border: 2px solid #c9b27c;
+  border-radius: 12px;
+  display: inline-block;
+  background: linear-gradient(
+    135deg,
+    rgba(201, 178, 124, 0.9),
+    rgba(119, 81, 81, 0.9)
+  );
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  color: #fff;
+  font-weight: 700;
+  font-size: 2rem;
+  text-align: center;
+}
+
+/* LISTADO DE PROPIEDADES */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.card {
+  border-radius: 24px;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+}
+
+.card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+}
+
+.card h3 {
+  margin: 0 0 8px 0;
+  color: #c9b27c;
+}
+
+.card p {
+  margin: 0 0 4px 0;
+  color: #e6d5a8;
+}
+
+button {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #c9b27c, #775151);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 700;
+  margin-top: 10px;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: translateY(-2px) scale(1.05);
+}
+
+/* FORMULARIOS */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 500px;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 24px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
+}
+
+input, textarea {
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  box-shadow: 0 0 10px rgba(201, 178, 124, 0.8);
+}
