@@ -1,26 +1,42 @@
 import type { Apartment } from "../data/apartments";
 
-type Props = {
+interface Props {
   apartments: Apartment[];
   onSelect: (apt: Apartment) => void;
   onDelete: (id: string) => void;
-};
+}
 
 export function ApartmentList({ apartments, onSelect, onDelete }: Props) {
-  if (apartments.length === 0) {
-    return <p>No apartments available.</p>;
-  }
-
   return (
     <div className="grid">
-      {apartments.map((apartment) => (
-        <div key={apartment.id} className="card">
-          <h3>{apartment.title}</h3>
-          <p>{apartment.location}</p>
-          <p>{apartment.price} €</p>
+      {apartments.map((apt) => (
+        <div key={apt.id} className="card">
+          {/* Imagen */}
+          <div className="image-container" onClick={() => onSelect(apt)}>
+            <img
+              src={apt.images?.[0] || "/images/placeholder.jpg"}
+              alt={apt.title}
+            />
+          </div>
 
-          <button onClick={() => onSelect(apartment)}>View</button>
-          <button onClick={() => onDelete(apartment.id)}>Delete</button>
+          <div className="card-body" onClick={() => onSelect(apt)}>
+            <h3>{apt.location}</h3>
+            <p className="title">{apt.title}</p>
+            <p className="details">
+              {apt.rooms} rooms · {apt.bathrooms} bath · {apt.surface} m²
+            </p>
+            <p className="price">{apt.price} € / month</p>
+          </div>
+
+          <button
+            className="delete-btn"
+            onClick={(e) => {
+              e.stopPropagation();
+              onDelete(apt.id);
+            }}
+          >
+            🗑️ Delete
+          </button>
         </div>
       ))}
     </div>

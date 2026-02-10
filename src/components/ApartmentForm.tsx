@@ -1,74 +1,52 @@
 import { useState } from "react";
 import type { Apartment } from "../data/apartments";
 
-type Props = {
-  initialData?: Apartment;
+interface Props {
   onSave: (apt: Apartment) => void;
   onCancel: () => void;
-};
+}
 
-export function ApartmentForm({ initialData, onSave, onCancel }: Props) {
-  const [form, setForm] = useState<Apartment>(
-    initialData ?? {
-      id: Date.now().toString(),
-      title: "",
-      price: 0,
-      rooms: 0,
-      bathrooms: 0,
-      surface: 0,
-      location: "",
-      createdAt: new Date().toISOString()
-    }
-  );
-
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const { name, value } = e.target;
-
-    setForm({
-      ...form,
-      [name]: name === "price" || name === "rooms"
-        ? Number(value)
-        : value
-    });
-  }
-
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    onSave(form);
-  }
+export function ApartmentForm({ onSave, onCancel }: Props) {
+  const [title, setTitle] = useState("");
+  const [image, setImage] = useState("");
 
   return (
-    <form onSubmit={handleSubmit}>
+    <div>
+      <h2>New Apartment</h2>
+
       <input
-        name="title"
         placeholder="Title"
-        value={form.title}
-        onChange={handleChange}
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
       />
 
       <input
-        name="location"
-        placeholder="Location"
-        value={form.location}
-        onChange={handleChange}
-      />
+        type="text"
+        placeholder="Image URL"
+        value={image}
+       onChange={(e) => setImage(e.target.value)}
+     />
 
-      <input
-        name="price"
-        type="number"
-        value={form.price}
-        onChange={handleChange}
-      />
 
-      <input
-        name="rooms"
-        type="number"
-        value={form.rooms}
-        onChange={handleChange}
-      />
+      <button
+        onClick={() =>
+          onSave({
+            id: crypto.randomUUID(),
+            title,
+            price: 1000,
+            rooms: 1,
+            bathrooms: 1,
+            surface: 50,
+            location: "Barcelona",
+            createdAt: new Date().toISOString(),
+            images: [image || "/images/placeholder.jpg"]
+          })
+        }
+      >
+        Save
+      </button>
 
-      <button type="submit">Save</button>
-      <button type="button" onClick={onCancel}>Cancel</button>
-    </form>
+      <button onClick={onCancel}>Cancel</button>
+    </div>
   );
 }

@@ -1,4 +1,3 @@
-// src/App.tsx
 import { useState } from "react";
 import { ApartmentList } from "./components/ApartmentList";
 import { ApartmentDetail } from "./components/ApartmentDetail";
@@ -32,9 +31,7 @@ export default function App() {
 
   return (
     <div className="app-container">
-      <div className="h1-container">
-        <h1>Luxury Apartments</h1>
-      </div>
+      <h1>Luxury Apartments</h1>
 
       {view === "list" && (
         <ApartmentList
@@ -44,9 +41,10 @@ export default function App() {
         />
       )}
       {view === "detail" && selected && (
-        <ApartmentDetail apartment={selected} onBack={() => setView("list")} onEdit={function (): void {
-          throw new Error("Function not implemented.");
-        } } />
+        <ApartmentDetail
+          apartment={selected}
+          onBack={() => setView("list")}
+        />
       )}
       {view === "form" && (
         <ApartmentForm onSave={handleSave} onCancel={() => setView("list")} />

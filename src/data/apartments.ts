@@ -9,6 +9,7 @@ export interface Apartment {
   description?: string;
   interested?: boolean;
   createdAt: string;
+  images: string[];
 }
 
 export const initialApartments: Apartment[] = [
@@ -21,8 +22,8 @@ export const initialApartments: Apartment[] = [
     surface: 85,
     location: "Barcelona, Eixample Dreta",
     description: "Recently renovated, balcony, elevator.",
-    interested: false,
-    createdAt: "2026-01-15T10:30:00Z"
+    createdAt: "2026-01-15T10:30:00Z",
+    images: ["/images/apt1.jpg", "/images/apt1-2.jpg"]
   },
   {
     id: "apt-002",
@@ -33,8 +34,9 @@ export const initialApartments: Apartment[] = [
     surface: 40,
     location: "Barcelona, Gràcia",
     description: "Perfect for students or couples.",
-    interested: true,
-    createdAt: "2026-01-18T12:00:00Z"
+    createdAt: "2026-01-18T12:00:00Z",
+    images: ["/images/apt8.jpg"]
+
   },
   {
     id: "apt-003",
@@ -44,7 +46,9 @@ export const initialApartments: Apartment[] = [
     bathrooms: 2,
     surface: 120,
     location: "Barcelona, Sant Andreu",
-    createdAt: "2026-01-20T09:15:00Z"
+    createdAt: "2026-01-20T09:15:00Z",
+    images: ["/images/apt7.jpg"]
+
   },
   {
     id: "apt-004",
@@ -55,8 +59,9 @@ export const initialApartments: Apartment[] = [
     surface: 65,
     location: "Barcelona, Barceloneta",
     description: "Sea view, modern kitchen, sunny terrace.",
-    interested: false,
-    createdAt: "2026-02-01T11:00:00Z"
+    createdAt: "2026-02-01T11:00:00Z",
+    images: ["/images/apt6.jpg"]
+
   },
   {
     id: "apt-005",
@@ -67,8 +72,9 @@ export const initialApartments: Apartment[] = [
     surface: 50,
     location: "Barcelona, El Born",
     description: "Wooden beams, lots of light, quiet street.",
-    interested: true,
-    createdAt: "2026-02-02T14:20:00Z"
+    createdAt: "2026-02-02T14:20:00Z",
+    images: ["/images/apt5.jpg"]
+
   },
   {
     id: "apt-006",
@@ -79,8 +85,9 @@ export const initialApartments: Apartment[] = [
     surface: 100,
     location: "Barcelona, Gràcia",
     description: "Balcony, recently renovated, parking included.",
-    interested: false,
-    createdAt: "2026-02-03T09:45:00Z"
+    createdAt: "2026-02-03T09:45:00Z",
+    images: ["/images/apt3.jpg"]
+
   },
   {
     id: "apt-007",
@@ -91,8 +98,9 @@ export const initialApartments: Apartment[] = [
     surface: 90,
     location: "Barcelona, Sants",
     description: "Modern appliances, close to transport.",
-    interested: false,
-    createdAt: "2026-02-04T10:15:00Z"
+    createdAt: "2026-02-04T10:15:00Z",
+    images: ["/images/apt4.jpg"]
+
   },
   {
     id: "apt-008",
@@ -103,7 +111,7 @@ export const initialApartments: Apartment[] = [
     surface: 150,
     location: "Barcelona, Eixample",
     description: "Rooftop terrace, panoramic views, elevator.",
-    interested: true,
-    createdAt: "2026-02-05T12:00:00Z"
+    createdAt: "2026-02-05T12:00:00Z",
+    images: ["/images/apt2.jpg"]
   }
 ];
