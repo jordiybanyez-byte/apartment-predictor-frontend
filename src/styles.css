@@ -172,7 +172,7 @@ input:focus, textarea:focus {
   position: absolute;
   top: 8px;
   right: 8px;
-  z-index: 10; /* asegura que esté encima de la card */
+  z-index: 10; 
   border: none;
   background: red;
   color: white;
@@ -191,7 +191,7 @@ input:focus, textarea:focus {
   margin-bottom: 20px;
 }
 
-/* Botón totalmente a la derecha */
+
 .menu-container {
   position: absolute;
   top: 20px;
@@ -201,10 +201,10 @@ input:focus, textarea:focus {
 .favorite-btn {
   position: absolute;
   top: 8px;
-  left: 8px; /* en vez de right */
+  left: 8px;
   z-index: 10;
   border: none;
-  background: #ff0000; /* dorado elegante */
+  background: #ff0000; 
   color: white;
   padding: 4px 8px;
   border-radius: 6px;

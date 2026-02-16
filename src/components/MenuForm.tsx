@@ -19,10 +19,10 @@ export function MenuForm({ onSelectView }: Props) {
             <button onClick={() => onSelectView("list")}>Reviews</button>
           </li>
           <li>
-            <button onClick={() => onSelectView("favorites")}>Favoritos</button>
-          </li>
-          <li>
             <button onClick={() => onSelectView("myReviews")}>Mis Reviews</button>
+          </li>
+           <li>
+            <button onClick={() => onSelectView("favorites")}>Favoritos</button>
           </li>
         </ul>
       )}
