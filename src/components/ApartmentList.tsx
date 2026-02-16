@@ -4,13 +4,33 @@ interface Props {
   apartments: Apartment[];
   onSelect: (apt: Apartment) => void;
   onDelete: (id: string) => void;
+  favorites: string[];
+  onToggleFavorite: (id: string) => void;
 }
 
-export function ApartmentList({ apartments, onSelect, onDelete }: Props) {
+export function ApartmentList({
+  apartments,
+  onSelect,
+  onDelete,
+  favorites,
+  onToggleFavorite,
+}: Props) {
   return (
     <div className="grid">
       {apartments.map((apt) => (
         <div key={apt.id} className="card">
+          
+        <button
+  className="favorite-btn"
+  onClick={(e) => {
+    e.stopPropagation();
+    onToggleFavorite(apt.id);
+  }}
+>
+  {favorites.includes(apt.id) ? "❤️" : "🤍"}
+</button>
+
+
           {/* Imagen */}
           <div className="image-container" onClick={() => onSelect(apt)}>
             <img

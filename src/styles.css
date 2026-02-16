@@ -180,3 +180,42 @@ input:focus, textarea:focus {
   border-radius: 6px;
   cursor: pointer;
 }
+
+.app-container {
+  position: relative;
+  padding: 20px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Botón totalmente a la derecha */
+.menu-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.favorite-btn {
+  position: absolute;
+  top: 8px;
+  left: 8px; /* en vez de right */
+  z-index: 10;
+  border: none;
+  background: #ff0000; /* dorado elegante */
+  color: white;
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.favorite-btn:hover {
+  transform: scale(1.1);
+  background: #ff0000;
+}
+
+
