@@ -11,6 +11,7 @@ type View =
   | "form"
   | "reviews"
   | "favorites"
+  | "apartments"
   | "myReviews";
 
 export default function App() {
@@ -46,17 +47,18 @@ export default function App() {
   };
 
   return (
- <div className="app-container">
-  <div className="header">
-    <h1>Luxury Apartments</h1>
-  </div>
+    <div className="app-container">
+      <div className="header">
+        <h1>Luxury Apartments</h1>
+      </div>
 
-  <MenuForm onSelectView={(view) => setView(view)} />
+      {/* Menú lateral */}
+      <MenuForm
+        onSelectView={(v: View) => setView(v)}
+      />
 
-
-
-
-      {view === "list" && (
+      
+      {(view === "list" || view === "apartments") && (
         <ApartmentList
           apartments={apartments}
           onSelect={handleSelect}
@@ -66,6 +68,7 @@ export default function App() {
         />
       )}
 
+  
       {view === "favorites" && (
         <ApartmentList
           apartments={apartments.filter((apt) =>
@@ -78,6 +81,7 @@ export default function App() {
         />
       )}
 
+     
       {view === "detail" && selected && (
         <ApartmentDetail
           apartment={selected}
@@ -85,6 +89,7 @@ export default function App() {
         />
       )}
 
+      
       {view === "form" && (
         <ApartmentForm
           onSave={handleSave}
@@ -92,9 +97,10 @@ export default function App() {
         />
       )}
 
+      
       {view === "reviews" && (
         <div>
-          <h2>Reviews</h2>
+          <h2>No hay reviews disponibles</h2>
         </div>
       )}
 
@@ -104,6 +110,7 @@ export default function App() {
         </div>
       )}
 
+      
       <button onClick={() => setView("form")}>
         Add Apartment
       </button>

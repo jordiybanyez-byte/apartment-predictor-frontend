@@ -1,31 +1,47 @@
 import { useState } from "react";
+import { AccordionProvider } from "./AccordionContext";
+import { AccordionItem } from "./AccordionItem";
 
 type Props = {
-  onSelectView: (view: "list" | "reviews" | "favorites" | "myReviews") => void;
+  onSelectView: (view: "list" | "reviews" | "favorites" | "myReviews" | "apartments") => void;
 };
 
 export function MenuForm({ onSelectView }: Props) {
-  const [open, setOpen] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   return (
-    <div className="menu-container">
-      <button onClick={() => setOpen(!open)}>
+    <>
+      <button
+        className="drawer-toggle"
+        onClick={() => setDrawerOpen(!drawerOpen)}
+      >
         ☰ Menu
       </button>
 
-      {open && (
-        <ul style={{ listStyle: "none", padding: 0, marginTop: "10px" }}>
-          <li>
-            <button onClick={() => onSelectView("list")}>Reviews</button>
-          </li>
-          <li>
-            <button onClick={() => onSelectView("myReviews")}>Mis Reviews</button>
-          </li>
-           <li>
-            <button onClick={() => onSelectView("favorites")}>Favoritos</button>
-          </li>
-        </ul>
-      )}
-    </div>
+      <div className={`drawer ${drawerOpen ? "open" : ""}`}> //if
+        <AccordionProvider>
+            <AccordionItem title="Apartments" sectionId="apartments">
+                 <li>
+              <button onClick={() => onSelectView("apartments")}>Apartamentos</button>
+            </li>
+            </AccordionItem>
+          <AccordionItem title="Reviews" sectionId="reviews">
+           
+            <li>
+              <button onClick={() => onSelectView("list")}>Todas</button>
+            </li>
+            <li>
+              <button onClick={() => onSelectView("myReviews")}>Mis Reviews</button>
+            </li>
+          </AccordionItem>
+
+          <AccordionItem title="Favoritos" sectionId="favorites">
+            <li>
+              <button onClick={() => onSelectView("favorites")}>Ver Favoritos</button>
+            </li>
+          </AccordionItem>
+        </AccordionProvider>
+      </div>
+    </>
   );
 }

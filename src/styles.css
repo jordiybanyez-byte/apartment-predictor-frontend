@@ -172,7 +172,7 @@ input:focus, textarea:focus {
   position: absolute;
   top: 8px;
   right: 8px;
-  z-index: 10; 
+  z-index: 10; /* asegura que esté encima de la card */
   border: none;
   background: red;
   color: white;
@@ -181,22 +181,85 @@ input:focus, textarea:focus {
   cursor: pointer;
 }
 
-.app-container {
-  position: relative;
-  padding: 20px;
-}
-
-.header {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-
+/* MENU ACCORDION */
 .menu-container {
-  position: absolute;
-  top: 20px;
-  right: 20px;
+  width: 250px;
+  margin-bottom: 40px;
+  font-family: "Playfair Display", "Georgia", serif;
 }
+
+.menu-container > button {
+  width: 100%;
+  padding: 12px 20px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #c9b27c, #775151);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  text-align: left;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.menu-container > button:hover {
+  transform: translateY(-2px) scale(1.05);
+}
+
+/* Contenedor accordion */
+.accordion-menu {
+  margin-top: 15px;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+}
+
+/* Botones de cada sección */
+.accordion-button {
+  width: 100%;
+  padding: 12px 20px;
+  border: none;
+  text-align: left;
+  background: linear-gradient(135deg, #c9b27c, #775151);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.accordion-button:hover {
+  transform: translateY(-2px) scale(1.03);
+}
+
+/* Contenido de la sección */
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  list-style: none;
+  padding: 0 20px;
+}
+
+.accordion-content li {
+  padding: 10px 0;
+}
+
+.accordion-content li button {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #c9b27c, #775151);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+
+.accordion-content li button:hover {
+  transform: translateY(-1px) scale(1.03);
+}
+
 
 .favorite-btn {
   position: absolute;
@@ -219,3 +282,93 @@ input:focus, textarea:focus {
 }
 
 
+.drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 280px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.9),
+    rgba(0, 0, 0, 0.9)
+  );
+  backdrop-filter: blur(8px);
+  box-shadow: 5px 0 30px rgba(0, 0, 0, 0.7);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  z-index: 1000;
+  padding: 100px 20px 20px 20px; 
+  display: flex;
+  flex-direction: column;
+}
+
+
+.drawer.open {
+  transform: translateX(0);
+}
+
+.drawer-toggle {
+  position: fixed;
+  top: 10px;
+  left: 20px;
+  z-index: 1100;
+  padding: 12px 20px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #c9b27c, #775151);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.drawer-toggle:hover {
+  transform: translateY(-2px) scale(1.05);
+}
+
+.accordion-button {
+  width: 100%;
+  padding: 10px 20px;
+  border: none;
+  text-align: left;
+  background: linear-gradient(135deg, #c9b27c, #775151);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  margin-bottom: 0px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.accordion-button:hover {
+  transform: translateY(-1px) scale(1.03);
+}
+
+.accordion-content {
+  list-style: none;
+  padding-left: 20px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.accordion-content li {
+  padding: 8px 0;
+}
+
+.accordion-content li button {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #c9b27c, #775151);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+
+.accordion-content li button:hover {
+  transform: translateY(-1px) scale(1.03);
+}
