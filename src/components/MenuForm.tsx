@@ -3,12 +3,12 @@ import { AccordionProvider } from "./AccordionContext";
 import { AccordionItem } from "./AccordionItem";
 
 type Props = {
-  onSelectView: (view: "list" | "reviews" | "favorites" | "myReviews" | "apartments") => void;
+  onSelectView: (view: "list" | "reviews" | "favorites" | "myReviews" | "apartments" | "favoriteReviews") => void;
 };
 
 export function MenuForm({ onSelectView }: Props) {
   const [drawerOpen, setDrawerOpen] = useState(false);
-//IF
+
   return (
     <>
       <button
@@ -20,15 +20,15 @@ export function MenuForm({ onSelectView }: Props) {
 
       <div className={`drawer ${drawerOpen ? "open" : ""}`}> 
         <AccordionProvider>
-            <AccordionItem title="Apartments" sectionId="apartments">
-                 <li>
+          <AccordionItem title="Apartments" sectionId="apartments">
+            <li>
               <button onClick={() => onSelectView("apartments")}>Apartamentos</button>
             </li>
-            </AccordionItem>
+          </AccordionItem>
+
           <AccordionItem title="Reviews" sectionId="reviews">
-           
             <li>
-              <button onClick={() => onSelectView("list")}>Todas</button>
+              <button onClick={() => onSelectView("favoriteReviews")}>Reviews Favoritas</button>
             </li>
             <li>
               <button onClick={() => onSelectView("myReviews")}>Mis Reviews</button>

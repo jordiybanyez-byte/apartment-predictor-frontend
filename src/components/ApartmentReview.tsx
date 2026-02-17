@@ -1,16 +1,8 @@
 import type { Apartment } from "../data/apartments";
-
-interface Review {
-  id: string;
-  apartmentId: string;
-  author: string;
-  rating: number;
-  comment: string;
-  createdAt: string;
-}
+import type { Review } from "../data/reviews";
 
 interface Props {
-  apartment: Apartment;
+  apartment?: Apartment;
   reviews: Review[];
   favoriteReviews: string[];
   onToggleFavoriteReview: (id: string) => void;
@@ -24,54 +16,62 @@ export function ApartmentReview({
   onToggleFavoriteReview,
   onBack,
 }: Props) {
+  const aptReviews = apartment
+    ? reviews.filter((r) => r.apartmentId === apartment.id)
+    : reviews;
 
-  const apartmentReviews = reviews.filter(
-    (review) => review.apartmentId === apartment.id
-  );
-
-  const averageRating =
-    apartmentReviews.length > 0
-      ? (
-          apartmentReviews.reduce((acc, r) => acc + r.rating, 0) /
-          apartmentReviews.length
-        ).toFixed(1)
-      : "No ratings";
-
-  const renderStars = (rating: number) => {
-    return "★".repeat(rating) + "☆".repeat(5 - rating);
-  };
+  const sortedReviews = [
+    ...aptReviews.filter((r) => favoriteReviews.includes(r.id)),
+    ...aptReviews.filter((r) => !favoriteReviews.includes(r.id)),
+  ];
 
   return (
-    <div className="review-container">
-      <h2>Reviews for {apartment.title}</h2>
-      <p>{apartment.location}</p>
+    <div className="reviews-container">
+      <button onClick={onBack}>← Back</button>
 
-      <h3>Average Rating: {averageRating} ⭐</h3>
+      <h2>
+        {apartment
+          ? `Reviews for ${apartment.title}`
+          : sortedReviews.length === 0
+          ? "No Reviews"
+          : "Reviews Favoritas / Mis Reviews"}
+      </h2>
 
-      {apartmentReviews.length === 0 && (
-        <p>No reviews yet.</p>
-      )}
+      {sortedReviews.length === 0 && <p>No reviews yet.</p>}
 
-      {apartmentReviews.map((review) => (
-        <div key={review.id} className="review-card">
-
+      {sortedReviews.map((r) => (
+        <div
+          key={r.id}
+          className="review-card"
+          style={{
+            background: favoriteReviews.includes(r.id)
+              ? "rgba(255, 223, 100, 0.2)"
+              : "rgba(255,255,255,0.1)",
+            borderRadius: "12px",
+            padding: "12px",
+            marginBottom: "12px",
+          }}
+        >
+          <p>
+            <strong>{r.author}</strong> ({r.rating}/5)
+          </p>
+          <p>{r.comment}</p>
           <button
-            className="favorite-review-btn"
-            onClick={() => onToggleFavoriteReview(review.id)}
+            onClick={() => onToggleFavoriteReview(r.id)}
+            style={{
+              background: favoriteReviews.includes(r.id) ? "red" : "gray",
+              color: "#fff",
+              border: "none",
+              borderRadius: "8px",
+              padding: "4px 10px",
+              cursor: "pointer",
+              marginTop: "8px",
+            }}
           >
-            {favoriteReviews.includes(review.id) ? "❤️" : "🤍"}
+            {favoriteReviews.includes(r.id) ? "❤️ Favorite" : "🤍 Favorite"}
           </button>
-
-          <h4>{review.author}</h4>
-          <p className="stars">{renderStars(review.rating)}</p>
-          <p>{review.comment}</p>
-          <small>
-            {new Date(review.createdAt).toLocaleDateString()}
-          </small>
         </div>
       ))}
-
-      <button onClick={onBack}>⬅ Back</button>
     </div>
   );
 }

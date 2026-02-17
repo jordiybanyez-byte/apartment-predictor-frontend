@@ -18,7 +18,7 @@ export function ApartmentReviewForm({ apartment, onSave, onCancel }: Props) {
     const newReview: Review = {
       id: "rev-" + Date.now(),
       apartmentId: apartment.id,
-      author,
+      author: "me",
       rating,
       comment,
       createdAt: new Date().toISOString(),
@@ -27,7 +27,7 @@ export function ApartmentReviewForm({ apartment, onSave, onCancel }: Props) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} style={{ maxWidth: "500px" }}>
       <h3>Add a Review for {apartment.title}</h3>
       <input
         type="text"
