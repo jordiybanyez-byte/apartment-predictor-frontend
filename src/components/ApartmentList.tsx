@@ -6,6 +6,7 @@ interface Props {
   onDelete: (id: string) => void;
   favorites: string[];
   onToggleFavorite: (id: string) => void;
+  onViewReviews: (apt: Apartment) => void; // 👈 NUEVO
 }
 
 export function ApartmentList({
@@ -14,22 +15,45 @@ export function ApartmentList({
   onDelete,
   favorites,
   onToggleFavorite,
+  onViewReviews,
 }: Props) {
   return (
     <div className="grid">
       {apartments.map((apt) => (
         <div key={apt.id} className="card">
-          
-        <button
-  className="favorite-btn"
-  onClick={(e) => {
-    e.stopPropagation();
-    onToggleFavorite(apt.id);
-  }}
->
-  {favorites.includes(apt.id) ? "❤️" : "🤍"}
-</button>
 
+          {/* ❤️ FAVORITO */}
+          <button
+            className="favorite-btn"
+            onClick={(e) => {
+              e.stopPropagation();
+              onToggleFavorite(apt.id);
+            }}
+          >
+            {favorites.includes(apt.id) ? "❤️" : "🤍"}
+          </button>
+
+          {/* ⭐ RESEÑAS */}
+          <button
+            className="review-btn"
+            onClick={(e) => {
+              e.stopPropagation();
+              onViewReviews(apt);
+            }}
+          >
+            ⭐
+          </button>
+
+          {/* 🗑️ DELETE */}
+          <button
+            className="delete-btn"
+            onClick={(e) => {
+              e.stopPropagation();
+              onDelete(apt.id);
+            }}
+          >
+            🗑️
+          </button>
 
           {/* Imagen */}
           <div className="image-container" onClick={() => onSelect(apt)}>
@@ -48,15 +72,6 @@ export function ApartmentList({
             <p className="price">{apt.price} € / month</p>
           </div>
 
-          <button
-            className="delete-btn"
-            onClick={(e) => {
-              e.stopPropagation();
-              onDelete(apt.id);
-            }}
-          >
-            🗑️ Delete
-          </button>
         </div>
       ))}
     </div>

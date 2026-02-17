@@ -115,3 +115,4 @@ export const initialApartments: Apartment[] = [
     images: ["/images/apt2.jpg"]
   }
 ];
+

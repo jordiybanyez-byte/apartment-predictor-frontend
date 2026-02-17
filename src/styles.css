@@ -12,8 +12,8 @@ body {
   padding: 40px;
   min-height: 100vh;
   color: #e7e1e1;
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    url("https://wallpaper.forfun.com/fetch/87/87356d7fb18211e43c3c68dcebd36de2.jpeg")
+  background:
+    url("https://plus.unsplash.com/premium_photo-1661766077694-6e3750b0fb97?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Zm9uZG8lMjBkZSUyMHBhbnRhbGxhJTIwZGUlMjBjYXNhfGVufDB8fDB8fHww")
       center;
   background-position: center;
   background-size: cover;
@@ -372,3 +372,51 @@ input:focus, textarea:focus {
 .accordion-content li button:hover {
   transform: translateY(-1px) scale(1.03);
 }
+
+.review-btn {
+  position: absolute;
+  bottom: 12px;   /* 👈 abajo */
+  right: 12px;    /* 👈 derecha */
+  z-index: 10;
+  border: none;
+  background: #f5c518;
+  color: white;
+  padding:2px 2px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: all 0.3s ease;
+}
+
+.review-btn:hover {
+  transform: scale(1.1);
+  background: #e0b000;
+}
+
+.review-container {
+  width: 100%;
+  max-width: 800px;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 30px;
+  border-radius: 24px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
+}
+
+.review-card {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.review-card h4 {
+  margin: 0;
+  color: #c9b27c;
+}
+
+.stars {
+  color: #f5c518;
+  font-size: 18px;
+  margin: 5px 0;
+}
+

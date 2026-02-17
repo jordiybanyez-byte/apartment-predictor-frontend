@@ -8,7 +8,7 @@ type Props = {
 
 export function MenuForm({ onSelectView }: Props) {
   const [drawerOpen, setDrawerOpen] = useState(false);
-
+//IF
   return (
     <>
       <button
@@ -18,7 +18,7 @@ export function MenuForm({ onSelectView }: Props) {
         ☰ Menu
       </button>
 
-      <div className={`drawer ${drawerOpen ? "open" : ""}`}> //if
+      <div className={`drawer ${drawerOpen ? "open" : ""}`}> 
         <AccordionProvider>
             <AccordionItem title="Apartments" sectionId="apartments">
                  <li>
