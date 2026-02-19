@@ -39,7 +39,8 @@ export function ApartmentForm({ onSave, onCancel }: Props) {
             surface: 50,
             location: "Barcelona",
             createdAt: new Date().toISOString(),
-            images: [image || "/images/placeholder.jpg"]
+            images: [image || "/images/placeholder.jpg"],
+            propertyType: "hipoteca"
           })
         }
       >

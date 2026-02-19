@@ -20,11 +20,7 @@ export function MenuForm({ onSelectView }: Props) {
 
       <div className={`drawer ${drawerOpen ? "open" : ""}`}> 
         <AccordionProvider>
-          <AccordionItem title="Apartments" sectionId="apartments">
-            <li>
-              <button onClick={() => onSelectView("apartments")}>Apartamentos</button>
-            </li>
-          </AccordionItem>
+        
 
           <AccordionItem title="Reviews" sectionId="reviews">
             <li>

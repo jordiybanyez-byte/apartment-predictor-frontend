@@ -310,9 +310,10 @@ input:focus, textarea:focus {
 
 .drawer-toggle {
   position: fixed;
-  top: 10px;
+  top: 55px;
   left: 20px;
-  z-index: 1100;
+  z-index: 3000; /* 🔥 MÁS alto que la topbar */
+
   padding: 12px 20px;
   border-radius: 18px;
   background: linear-gradient(135deg, #c9b27c, #775151);
@@ -322,6 +323,7 @@ input:focus, textarea:focus {
   border: none;
   transition: all 0.3s ease;
 }
+
 
 .drawer-toggle:hover {
   transform: translateY(-2px) scale(1.05);
@@ -426,4 +428,63 @@ input:focus, textarea:focus {
   margin: 5px 0;
   display: inline-block;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+
+
+/* ========================= */
+/* 🔝 TOP CATEGORY BAR */
+/* ========================= */
+
+.topbar-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(201, 178, 124, 0.95),
+    rgba(119, 81, 81, 0.95)
+  );
+
+  backdrop-filter: blur(6px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+  z-index: 2000;
+}
+
+/* Evita que herede tu button global */
+.topbar-button {
+  background: none !important;
+  border: none;
+  color: #ffffff;
+  font-family: "Playfair Display", "Georgia", serif;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  padding: 6px 10px;
+  transition: all 0.3s ease;
+}
+
+.topbar-button:hover {
+  transform: scale(1.1);
+  color: #000000;
+}
+
+/* Categoría activa */
+.topbar-button.active {
+  border-bottom: 2px solid #ffffff;
+  padding-bottom: 4px;
+}
+
+/* Espacio para que no tape el contenido */
+.app-container {
+  padding-top: 80px;
 }
