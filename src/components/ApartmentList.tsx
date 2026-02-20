@@ -55,7 +55,7 @@ export function ApartmentList({
             🗑️
           </button>
 
-          {/* Imagen */}
+   
           <div className="image-container" onClick={() => onSelect(apt)}>
             <img
               src={apt.images?.[0] || "/images/placeholder.jpg"}
