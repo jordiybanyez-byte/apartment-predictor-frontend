@@ -17,6 +17,9 @@ type View =
   | "favorites"
   | "apartments"
   | "myReviews"
+  | "myData"
+  | "myHouses"
+  | "myDocu"
   | "addReview"
   | "favoriteReviews";
 
@@ -49,10 +52,11 @@ export default function App() {
     setView("detail");
   };
 
+
   // Eliminar apartamento
-  const handleDelete = (id: string) => {
+  function handleDelete(id: string) {
     setApartments(apartments.filter((a) => a.id !== id));
-  };
+  }
 
   // Guardar apartamento
   const handleSave = (apt: Apartment) => {
@@ -94,7 +98,7 @@ export default function App() {
     setView("myReviews");
   };
 
-  // 🔥 FILTRO POR CATEGORÍA
+  // FILTRO POR CATEGORÍA
   const filteredApartments = category
     ? apartments.filter((apt) => apt.propertyType === category)
     : apartments;
@@ -102,7 +106,7 @@ export default function App() {
   return (
     <div className="app-container">
 
-      {/* 🔝 TOP BAR */}
+      {/* TOP BAR */}
       <TopBar
         selectedCategory={category}
         onSelectCategory={(cat) => {
@@ -151,9 +155,10 @@ export default function App() {
       {view === "detail" && selected && (
         <>
           <ApartmentDetail
-            apartment={selected}
-            onBack={() => setView("list")}
-          />
+  apartment={selected}
+  reviews={reviews}
+  onBack={() => setView("list")}
+/>
           <button onClick={() => setView("addReview")}>
             Add Review
           </button>

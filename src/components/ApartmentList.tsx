@@ -69,7 +69,9 @@ export function ApartmentList({
             <p className="details">
               {apt.rooms} rooms · {apt.bathrooms} bath · {apt.surface} m²
             </p>
+            <p className="transport">{apt.publicTransport}</p>
             <p className="price">{apt.price} € / month</p>
+             
           </div>
 
         </div>

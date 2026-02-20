@@ -98,6 +98,7 @@ h1 {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+
 .card:hover {
   transform: translateY(-5px) scale(1.02);
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
@@ -487,4 +488,169 @@ input:focus, textarea:focus {
 /* Espacio para que no tape el contenido */
 .app-container {
   padding-top: 80px;
+}
+
+/* ========================= */
+/* 🏠 APARTMENT DETAIL VIEW */
+/* ========================= */
+
+.apartment-detail {
+  width: 100%;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 24px;
+
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+  color: #f8e1c2;
+}
+
+/* Botón volver */
+.apartment-detail .back-button {
+  background: linear-gradient(135deg, #c9b27c, #775151);
+  border: none;
+  padding: 10px 18px;
+  border-radius: 16px;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  margin-bottom: 25px;
+  transition: all 0.3s ease;
+}
+
+.apartment-detail .back-button:hover {
+  transform: translateY(-2px) scale(1.05);
+}
+
+/* Título */
+.apartment-detail h2 {
+  font-size: 2.5rem;
+  margin-bottom: 25px;
+  color: #c9b27c;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+/* Galería estilo lujo */
+.detail-gallery {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 260px 260px;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.detail-gallery img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 18px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+  transition: transform 0.4s ease;
+}
+
+.detail-gallery img:hover {
+  transform: scale(1.03);
+}
+
+/* Imagen principal grande */
+.detail-gallery img:first-child {
+  grid-row: span 2;
+  height: 100%; /* fuerza que llene el espacio */
+}
+
+/* Info contenedor */
+.apartment-info {
+  padding: 25px;
+  border-radius: 20px;
+  background: linear-gradient(
+    135deg,
+    rgba(201, 178, 124, 0.85),
+    rgba(119, 81, 81, 0.85)
+  );
+  color: white;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* Precio destacado */
+.apartment-info .price {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+/* Meta info */
+.apartment-info .meta {
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+/* Descripción */
+.apartment-info .description {
+  margin-top: 15px;
+  line-height: 1.6;
+}
+
+/* ========================= */
+/* DETAIL LAYOUT CON REVIEW */
+/* ========================= */
+
+.detail-layout {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.detail-gallery {
+  display: grid;
+  grid-template-columns: 1fr; /* una columna */
+  grid-template-rows: 400px 150px; /* imagen principal más alta */
+  gap: 15px;
+}
+
+.detail-gallery img:first-child {
+  height: 100%;
+  grid-row: span 2;
+  border-radius: 18px;
+  object-fit: cover;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.7);
+}
+
+.detail-gallery img:not(:first-child) {
+  height: 150px;
+}
+
+/* ========================= */
+/* REVIEWS LATERAL (2) */
+/* ========================= */
+.side-review {
+  padding: 20px;
+  border-radius: 20px;
+  background: linear-gradient(
+    135deg,
+    rgba(201, 178, 124, 0.9),
+    rgba(119, 81, 81, 0.9)
+  );
+  color: white;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: fit-content;
+}
+
+.single-review p {
+  margin: 5px 0;
+}
+
+.single-review small {
+  opacity: 0.8;
+}
+
+.single-review hr {
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  margin: 10px 0;
 }
