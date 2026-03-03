@@ -52,9 +52,10 @@ export const TopBar = ({
         className="topbar-button theme-button"
         onClick={toggleTheme}
       >
-        {theme === "light" ? "🌙" : "☀️"}
+        {theme === "light" ? "☀️" : "🌙"}
       </button>
 
     </div>
   );
 };
+
