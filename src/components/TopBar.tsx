@@ -1,3 +1,5 @@
+import { useTheme } from "../context/ThemeContext";
+
 type Category = "hipoteca" | "alquiler" | "temporal" | "venta";
 
 interface TopBarProps {
@@ -11,6 +13,8 @@ export const TopBar = ({
   onSelectCategory,
   onShowAll,
 }: TopBarProps) => {
+  const { theme, toggleTheme } = useTheme();
+
   const categories: Category[] = [
     "hipoteca",
     "alquiler",
@@ -21,7 +25,7 @@ export const TopBar = ({
   return (
     <div className="topbar-container">
 
-      {/* 🔥 NUEVO BOTÓN */}
+      {/* Botón Apartments */}
       <button
         className={`topbar-button ${selectedCategory === null ? "active" : ""}`}
         onClick={onShowAll}
@@ -42,6 +46,15 @@ export const TopBar = ({
             : cat.charAt(0).toUpperCase() + cat.slice(1)}
         </button>
       ))}
+
+      {/* 🌗 BOTÓN TEMA */}
+      <button
+        className="topbar-button theme-button"
+        onClick={toggleTheme}
+      >
+        {theme === "light" ? "🌙" : "☀️"}
+      </button>
+
     </div>
   );
 };
