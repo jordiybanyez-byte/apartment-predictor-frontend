@@ -13,6 +13,7 @@ export interface Apartment {
   createdAt: string;
   images: string[];
   propertyType: "hipoteca" | "alquiler" | "temporal" | "venta"; 
+  
 }
 
 

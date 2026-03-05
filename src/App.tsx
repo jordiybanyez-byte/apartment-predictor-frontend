@@ -1,13 +1,15 @@
+// src/App.tsx
 import { useState } from "react";
-import { ApartmentList } from "./components/ApartmentList";
-import { ApartmentDetail } from "./components/ApartmentDetail";
-import { ApartmentForm } from "./components/ApartmentForm";
+import { ApartmentList } from "./view/ApartmentList";
+import { ApartmentDetail } from "./view/ApartmentDetail";
+import { ApartmentForm } from "./view/ApartmentForm";
 import { ApartmentReview } from "./components/ApartmentReview";
 import { ApartmentReviewForm } from "./components/ApartmentReviewForm";
 import { MenuForm } from "./components/MenuForm";
 import { TopBar } from "./components/TopBar";
-import { initialApartments, type Apartment } from "./data/apartments";
-import { initialReviews, type Review } from "./data/reviews";
+import type { Apartment } from "./data/apartments";
+import type { Review } from "./data/reviews";
+import { useApartments } from "./services/apartmentServiceHooks";
 
 type View =
   | "list"
@@ -15,36 +17,26 @@ type View =
   | "form"
   | "reviews"
   | "favorites"
-  | "apartments"
   | "myReviews"
+  | "addReview"
+  | "favoriteReviews"
+  | "apartments"
   | "myData"
   | "myHouses"
-  | "myDocu"
-  | "addReview"
-  | "favoriteReviews";
+  | "myDocu";
 
 type Category = "hipoteca" | "alquiler" | "temporal" | "venta" | null;
 
 export default function App() {
-  const [apartments, setApartments] =
-    useState<Apartment[]>(initialApartments);
+  const { apartments, isLoading, error, createApartment, updateApartment, deleteApartment } =
+    useApartments();
 
-  const [reviews, setReviews] =
-    useState<Review[]>(initialReviews);
-
-  const [selected, setSelected] =
-    useState<Apartment | null>(null);
-
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [selected, setSelected] = useState<Apartment | null>(null);
   const [view, setView] = useState<View>("list");
-
-  const [category, setCategory] =
-    useState<Category>(null);
-
-  const [favorites, setFavorites] =
-    useState<string[]>([]);
-
-  const [favoriteReviews, setFavoriteReviews] =
-    useState<string[]>([]);
+  const [category, setCategory] = useState<Category>(null);
+  const [favorites, setFavorites] = useState<string[]>([]);
+  const [favoriteReviews, setFavoriteReviews] = useState<string[]>([]);
 
   // Seleccionar apartamento
   const handleSelect = (apt: Apartment) => {
@@ -52,37 +44,27 @@ export default function App() {
     setView("detail");
   };
 
-
-  // Eliminar apartamento
-  function handleDelete(id: string) {
-    setApartments(apartments.filter((a) => a.id !== id));
-  }
-
   // Guardar apartamento
   const handleSave = (apt: Apartment) => {
-    setApartments((prev) => {
-      const exists = prev.find((a) => a.id === apt.id);
-      if (exists) return prev.map((a) => (a.id === apt.id ? apt : a));
-      return [...prev, apt];
-    });
+    if (apartments.find((a) => a.id === apt.id)) {
+      updateApartment(apt.id, apt);
+    } else {
+      createApartment(apt);
+    }
     setView("list");
   };
 
   // Toggle favorito apartamento
   const toggleFavorite = (id: string) => {
     setFavorites((prev) =>
-      prev.includes(id)
-        ? prev.filter((favId) => favId !== id)
-        : [...prev, id]
+      prev.includes(id) ? prev.filter((fid) => fid !== id) : [...prev, id]
     );
   };
 
   // Toggle favorito review
   const toggleFavoriteReview = (reviewId: string) => {
     setFavoriteReviews((prev) =>
-      prev.includes(reviewId)
-        ? prev.filter((id) => id !== reviewId)
-        : [...prev, reviewId]
+      prev.includes(reviewId) ? prev.filter((id) => id !== reviewId) : [...prev, reviewId]
     );
   };
 
@@ -105,8 +87,6 @@ export default function App() {
 
   return (
     <div className="app-container">
-
-      {/* TOP BAR */}
       <TopBar
         selectedCategory={category}
         onSelectCategory={(cat) => {
@@ -125,12 +105,15 @@ export default function App() {
 
       <MenuForm onSelectView={(v: View) => setView(v)} />
 
-      {/* Lista */}
+      {isLoading && <p>Loading apartments...</p>}
+      {error && <p style={{ color: "red" }}>Error: {error}</p>}
+
+      {/* Lista de apartamentos */}
       {(view === "list" || view === "apartments") && (
         <ApartmentList
           apartments={filteredApartments}
           onSelect={handleSelect}
-          onDelete={handleDelete}
+          onDelete={deleteApartment}
           favorites={favorites}
           onToggleFavorite={toggleFavorite}
           onViewReviews={handleViewReviews}
@@ -140,11 +123,9 @@ export default function App() {
       {/* Favoritos */}
       {view === "favorites" && (
         <ApartmentList
-          apartments={filteredApartments.filter((apt) =>
-            favorites.includes(apt.id)
-          )}
+          apartments={filteredApartments.filter((apt) => favorites.includes(apt.id))}
           onSelect={handleSelect}
-          onDelete={handleDelete}
+          onDelete={deleteApartment}
           favorites={favorites}
           onToggleFavorite={toggleFavorite}
           onViewReviews={handleViewReviews}
@@ -155,22 +136,17 @@ export default function App() {
       {view === "detail" && selected && (
         <>
           <ApartmentDetail
-  apartment={selected}
-  reviews={reviews}
-  onBack={() => setView("list")}
-/>
-          <button onClick={() => setView("addReview")}>
-            Add Review
-          </button>
+            apartment={selected}
+            reviews={reviews}
+            onBack={() => setView("list")}
+          />
+          <button onClick={() => setView("addReview")}>Add Review</button>
         </>
       )}
 
       {/* Formulario apartamento */}
       {view === "form" && (
-        <ApartmentForm
-          onSave={handleSave}
-          onCancel={() => setView("list")}
-        />
+        <ApartmentForm onSave={handleSave} onCancel={() => setView("list")} />
       )}
 
       {/* Añadir review */}
@@ -196,10 +172,7 @@ export default function App() {
       {/* Reviews favoritas */}
       {view === "favoriteReviews" && (
         <ApartmentReview
-          apartment={undefined}
-          reviews={reviews.filter((r) =>
-            favoriteReviews.includes(r.id)
-          )}
+          reviews={reviews.filter((r) => favoriteReviews.includes(r.id))}
           favoriteReviews={favoriteReviews}
           onToggleFavoriteReview={toggleFavoriteReview}
           onBack={() => setView("list")}
@@ -209,7 +182,6 @@ export default function App() {
       {/* Mis Reviews */}
       {view === "myReviews" && (
         <ApartmentReview
-          apartment={undefined}
           reviews={reviews.filter((r) => r.author === "me")}
           favoriteReviews={favoriteReviews}
           onToggleFavoriteReview={toggleFavoriteReview}
@@ -217,9 +189,7 @@ export default function App() {
         />
       )}
 
-      <button onClick={() => setView("form")}>
-        Add Apartment
-      </button>
+      <button onClick={() => setView("form")}>Add Apartment</button>
     </div>
   );
 }
