@@ -4,8 +4,8 @@ import { ApartmentDetail } from "./view/ApartmentDetail";
 import { ApartmentForm } from "./view/ApartmentForm";
 import { ApartmentReview } from "./components/ApartmentReview";
 import { ApartmentReviewForm } from "./components/ApartmentReviewForm";
-import { MenuForm } from "./components/MenuForm";
-import { TopBar } from "./components/TopBar";
+import { MenuForm } from "./menuStyles/MenuForm";
+import { TopBar } from "./menuStyles/TopBar";
 import { initialApartments, type Apartment } from "./data/apartments";
 import { initialReviews, type Review } from "./data/reviews";
 
