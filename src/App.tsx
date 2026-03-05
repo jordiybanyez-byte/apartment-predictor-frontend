@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { ApartmentList } from "./components/ApartmentList";
-import { ApartmentDetail } from "./components/ApartmentDetail";
-import { ApartmentForm } from "./components/ApartmentForm";
+import { ApartmentList } from "./view/ApartmentList";
+import { ApartmentDetail } from "./view/ApartmentDetail";
+import { ApartmentForm } from "./view/ApartmentForm";
 import { ApartmentReview } from "./components/ApartmentReview";
 import { ApartmentReviewForm } from "./components/ApartmentReviewForm";
 import { MenuForm } from "./components/MenuForm";
