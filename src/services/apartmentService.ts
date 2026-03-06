@@ -4,7 +4,7 @@ import type { Apartment } from "../data/apartments";
 
 // Base URL de tu backend
 const api = axios.create({
-  baseURL: "http://localhost:8080/api/v1/apartment",
+  baseURL: "http://localhost:8080/api/v1/apartment/getAll",
   headers: {
     "Content-Type": "application/json",
   },
