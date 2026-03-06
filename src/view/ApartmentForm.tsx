@@ -1,54 +1,34 @@
+// src/view/ApartmentForm.tsx
 import { useState } from "react";
-import type { Apartment } from "../data/apartments";
+import { useApartmentContext } from "../context/ApartmentContext";
 
-interface Props {
-  onSave: (apt: Apartment) => void;
-  onCancel: () => void;
-}
+export const ApartmentForm = () => {
+  const { incrementRefresh } = useApartmentContext();
+  const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
+  const [price, setPrice] = useState<number | "">("");
 
-export function ApartmentForm({ onSave, onCancel }: Props) {
-  const [title, setTitle] = useState("");
-  const [image, setImage] = useState("");
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Saving apartment:", { name, address, price });
+    incrementRefresh();
+    setName("");
+    setAddress("");
+    setPrice("");
+  };
 
   return (
-    <div>
-      <h2>New Apartment</h2>
-
+    <form onSubmit={handleSubmit} className="apartment-form">
+      <input value={name} onChange={e => setName(e.target.value)} placeholder="Name" required />
+      <input value={address} onChange={e => setAddress(e.target.value)} placeholder="Address" required />
       <input
-        placeholder="Title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
+        value={price}
+        onChange={e => setPrice(Number(e.target.value))}
+        placeholder="Price"
+        type="number"
+        required
       />
-
-      <input
-        type="text"
-        placeholder="Image URL"
-        value={image}
-       onChange={(e) => setImage(e.target.value)}
-     />
-
-
-      <button
-        onClick={() =>
-          onSave({
-            id: crypto.randomUUID(),
-            title,
-            price: 1000,
-            rooms: 1,
-            bathrooms: 1,
-            surface: 50,
-            location: "Barcelona",
-            createdAt: new Date().toISOString(),
-            images: [image || "/images/placeholder.jpg"],
-            publicTransport: ["L1", "Bus H10"],
-            propertyType: "hipoteca",
-          })
-        }
-      >
-        Save
-      </button>
-
-      <button onClick={onCancel}>Cancel</button>
-    </div>
+      <button type="submit">Save</button>
+    </form>
   );
-}
+};
