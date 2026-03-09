@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { AccordionProvider } from "./AccordionContext";
-import { AccordionItem } from "./AccordionItem";
+import { AccordionProvider } from "../context/AccordionContext";
+import { AccordionItem } from "../components/AccordionItem";
 
 type Props = {
   onSelectView: (view: "list" | "reviews" | "favorites" | "myReviews" | "apartments" | "favoriteReviews" | "myData" | "myHouses" | "myDocu") => void;
