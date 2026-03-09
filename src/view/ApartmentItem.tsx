@@ -1,5 +1,5 @@
 // src/view/ApartmentItem.tsx
-import { Apartment, useApartmentContext } from "../context/ApartmentContext";
+import { type Apartment, useApartmentContext } from "../context/ApartmentContext";
 
 interface ApartmentItemProps {
   apartment: Apartment;
