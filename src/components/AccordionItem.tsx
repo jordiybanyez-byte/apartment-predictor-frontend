@@ -1,4 +1,4 @@
-import { useAccordion } from "./AccordionContext";
+import { useAccordion } from "../context/AccordionContext";
 
 type AccordionItemProps = {
   title: string;

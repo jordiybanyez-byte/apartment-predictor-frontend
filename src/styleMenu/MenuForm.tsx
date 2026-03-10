@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AccordionProvider } from "../components/AccordionContext";
+import { AccordionProvider } from "../context/AccordionContext";
 import { AccordionItem } from "../components/AccordionItem";
 
 type Props = {
