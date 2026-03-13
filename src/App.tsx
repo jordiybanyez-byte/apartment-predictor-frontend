@@ -1,195 +1,58 @@
-// src/App.tsx
+
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from "react";
-import { ApartmentList } from "./view/ApartmentList";
-import { ApartmentDetail } from "./view/ApartmentDetail";
-import { ApartmentForm } from "./view/ApartmentForm";
-import { ApartmentReview } from "./components/ApartmentReview";
-import { ApartmentReviewForm } from "./components/ApartmentReviewForm";
-import { MenuForm } from "./components/MenuForm";
-import { TopBar } from "./components/TopBar";
-import type { Apartment } from "./data/apartments";
-import type { Review } from "./data/reviews";
-import { useApartments } from "./services/apartmentServiceHooks";
-
-type View =
-  | "list"
-  | "detail"
-  | "form"
-  | "reviews"
-  | "favorites"
-  | "myReviews"
-  | "addReview"
-  | "favoriteReviews"
-  | "apartments"
-  | "myData"
-  | "myHouses"
-  | "myDocu";
-
-type Category = "hipoteca" | "alquiler" | "temporal" | "venta" | null;
+import { IconButton, Box } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import SideBar from "./navigation/SideBar";
+import HomePage from "./pages/HomePage";
+import ApartmentPage from "./pages/ApartmentPage";
+import Reviews from "./review/Reviews";
+import "./App.css";
+import { ApartmentServiceProvider } from "./middleware/apartmentService";
 
 export default function App() {
-  const { apartments, isLoading, error, createApartment, updateApartment, deleteApartment } =
-    useApartments();
-
-  const [reviews, setReviews] = useState<Review[]>([]);
-  const [selected, setSelected] = useState<Apartment | null>(null);
-  const [view, setView] = useState<View>("list");
-  const [category, setCategory] = useState<Category>(null);
-  const [favorites, setFavorites] = useState<string[]>([]);
-  const [favoriteReviews, setFavoriteReviews] = useState<string[]>([]);
-
-  // Seleccionar apartamento
-  const handleSelect = (apt: Apartment) => {
-    setSelected(apt);
-    setView("detail");
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  
+  const toggleDrawer = (open) => () => setDrawerOpen(open);
+  
+  const containerStyle = {
+    display: 'flex',
+    minHeight: '100vh'
   };
-
-  // Guardar apartamento
-  const handleSave = (apt: Apartment) => {
-    if (apartments.find((a) => a.id === apt.id)) {
-      updateApartment(apt.id, apt);
-    } else {
-      createApartment(apt);
-    }
-    setView("list");
+  
+  const buttonStyle = {
+    position: 'fixed',
+    top: '16px',
+    left: '16px',
+    zIndex: 1000
   };
-
-  // Toggle favorito apartamento
-  const toggleFavorite = (id: string) => {
-    setFavorites((prev) =>
-      prev.includes(id) ? prev.filter((fid) => fid !== id) : [...prev, id]
-    );
+  
+  const mainStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    flexGrow: 1,
+    padding: '24px',
+    marginLeft: '48px'
   };
-
-  // Toggle favorito review
-  const toggleFavoriteReview = (reviewId: string) => {
-    setFavoriteReviews((prev) =>
-      prev.includes(reviewId) ? prev.filter((id) => id !== reviewId) : [...prev, reviewId]
-    );
-  };
-
-  // Ver reviews
-  const handleViewReviews = (apt: Apartment) => {
-    setSelected(apt);
-    setView("reviews");
-  };
-
-  // Guardar review
-  const handleSaveReview = (review: Review) => {
-    setReviews((prev) => [...prev, review]);
-    setView("myReviews");
-  };
-
-  // FILTRO POR CATEGORÍA
-  const filteredApartments = category
-    ? apartments.filter((apt) => apt.propertyType === category)
-    : apartments;
-
+  
   return (
-    <div className="app-container">
-      <TopBar
-        selectedCategory={category}
-        onSelectCategory={(cat) => {
-          setCategory(cat);
-          setView("list");
-        }}
-        onShowAll={() => {
-          setCategory(null);
-          setView("apartments");
-        }}
-      />
-
-      <div className="header">
-        <h1>Luxury Apartments</h1>
-      </div>
-
-      <MenuForm onSelectView={(v: View) => setView(v)} />
-
-      {isLoading && <p>Loading apartments...</p>}
-      {error && <p style={{ color: "red" }}>Error: {error}</p>}
-
-      {/* Lista de apartamentos */}
-      {(view === "list" || view === "apartments") && (
-        <ApartmentList
-          apartments={filteredApartments}
-          onSelect={handleSelect}
-          onDelete={deleteApartment}
-          favorites={favorites}
-          onToggleFavorite={toggleFavorite}
-          onViewReviews={handleViewReviews}
-        />
-      )}
-
-      {/* Favoritos */}
-      {view === "favorites" && (
-        <ApartmentList
-          apartments={filteredApartments.filter((apt) => favorites.includes(apt.id))}
-          onSelect={handleSelect}
-          onDelete={deleteApartment}
-          favorites={favorites}
-          onToggleFavorite={toggleFavorite}
-          onViewReviews={handleViewReviews}
-        />
-      )}
-
-      {/* Detalle */}
-      {view === "detail" && selected && (
-        <>
-          <ApartmentDetail
-            apartment={selected}
-            reviews={reviews}
-            onBack={() => setView("list")}
-          />
-          <button onClick={() => setView("addReview")}>Add Review</button>
-        </>
-      )}
-
-      {/* Formulario apartamento */}
-      {view === "form" && (
-        <ApartmentForm onSave={handleSave} onCancel={() => setView("list")} />
-      )}
-
-      {/* Añadir review */}
-      {view === "addReview" && selected && (
-        <ApartmentReviewForm
-          apartment={selected}
-          onSave={handleSaveReview}
-          onCancel={() => setView("list")}
-        />
-      )}
-
-      {/* Reviews apartamento */}
-      {view === "reviews" && selected && (
-        <ApartmentReview
-          apartment={selected}
-          reviews={reviews}
-          favoriteReviews={favoriteReviews}
-          onToggleFavoriteReview={toggleFavoriteReview}
-          onBack={() => setView("list")}
-        />
-      )}
-
-      {/* Reviews favoritas */}
-      {view === "favoriteReviews" && (
-        <ApartmentReview
-          reviews={reviews.filter((r) => favoriteReviews.includes(r.id))}
-          favoriteReviews={favoriteReviews}
-          onToggleFavoriteReview={toggleFavoriteReview}
-          onBack={() => setView("list")}
-        />
-      )}
-
-      {/* Mis Reviews */}
-      {view === "myReviews" && (
-        <ApartmentReview
-          reviews={reviews.filter((r) => r.author === "me")}
-          favoriteReviews={favoriteReviews}
-          onToggleFavoriteReview={toggleFavoriteReview}
-          onBack={() => setView("list")}
-        />
-      )}
-
-      <button onClick={() => setView("form")}>Add Apartment</button>
-    </div>
+    <BrowserRouter>
+      <ApartmentServiceProvider>
+        <div style={containerStyle}>
+          <IconButton onClick={toggleDrawer(true)} style={buttonStyle}>
+            <MenuIcon />
+          </IconButton>
+          <SideBar open={drawerOpen} toggleDrawer={toggleDrawer} />
+          
+          <main style={mainStyle}>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/apartments" element={<ApartmentPage />} />
+              <Route path="/reviews/apartment/:id" element={<Reviews />} />
+            </Routes>
+          </main>
+        </div>
+      </ApartmentServiceProvider>
+    </BrowserRouter>
   );
 }

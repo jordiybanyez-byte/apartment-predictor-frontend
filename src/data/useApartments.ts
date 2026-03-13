@@ -1,42 +1,37 @@
-
-import axios from "axios";
 import { useEffect, useState } from "react";
+import { useApartmentService } from "../middleware/apartmentServiceHooks";
 
-export interface Apartment {
-  id: number;
-  name: string;
-  address: string;
-  price: number;
-  // agrega otras propiedades según tu API
-}
-
-export const useApartments = (refreshTrigger: unknown) => {
-  const [apartments, setApartments] = useState<Apartment[]>([]);
+export const useApartments = (refreshTrigger) => {
+  // State to hold apartments data, loading status, and error status
+  const [apartments, setApartments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isAxiosError, setIsAxiosError] = useState(false);
+  
+  // Use the custom hook to get the apartment service
+  const apartmentService = useApartmentService();
 
+  // Fetch apartments data from the API
+  // and handle loading and error states
   const fetchApartments = async () => {
     try {
-      const response = await axios.get<Apartment[]>("/api/v1/apartment/getAll");
-      console.log("API Response:", response);
-      setApartments(response.data);
+      // Use the apartment service instead of direct axios call
+      const apartmentsData = await apartmentService.getAllApartments();
+      setApartments(apartmentsData);
       setIsLoading(false);
-      setIsAxiosError(false); // reset error on success
-    } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
-        console.error("Axios error fetching apartments:", error.message);
-        setIsAxiosError(true);
-      } else {
-        console.error("Unknown error fetching apartments:", error);
-        setIsAxiosError(false);
-      }
+    } catch (error) {
+      console.error("Error fetching apartments:", error);
+      setIsAxiosError(error.isAxiosError || false);
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchApartments();
+    const fetchData = async () => {
+      await fetchApartments();
+    };
+    fetchData();
   }, [refreshTrigger]);
 
+  // Return the apartments data, loading status, error status, and refetch function
   return { apartments, isLoading, isAxiosError, refetch: fetchApartments };
 };
