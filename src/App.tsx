@@ -8,7 +8,7 @@ import HomePage from "./pages/HomePage";
 import ApartmentPage from "./pages/ApartmentPage";
 import Reviews from "./review/Reviews";
 import "./App.css";
-import { ApartmentServiceProvider } from "./middleware/apartmentService";
+import { ApartmentServiceProvider } from "./middleware/apartmentApiService";
 
 export default function App() {
   const [drawerOpen, setDrawerOpen] = useState(false);

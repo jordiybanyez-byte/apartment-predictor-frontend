@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useApartmentService } from "../middleware/apartmentServiceHooks";
+import { useApartments } from "../middleware/apartmentServiceHooks";
 import ApartmentCreate from "./ApartmentCreate";
 import ApartmentList from "./ApartmentList";
 
