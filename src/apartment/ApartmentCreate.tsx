@@ -1,13 +1,22 @@
-import { useState } from "react";
+import { useState, type ChangeEvent, type FormEvent } from "react";
+import type { ApartmentFormData, FurnishingStatus } from "../data/apartment";
 import ApartmentForm from "../components/ApartmentForm";
 
-const ApartmentCreate = ({ onSubmit, isLoading, error, onSuccess, onCancel }) => {
-  const [formData, setFormData] = useState({
-    price: "",
-    area: "",
-    bedrooms: "",
-    bathrooms: "",
-    stories: "",
+interface ApartmentCreateProps {
+  onSubmit: (data: ApartmentFormData) => Promise<boolean>;
+  isLoading?: boolean;
+  error?: string;
+  onSuccess: () => void;
+  onCancel: () => void;
+}
+
+const ApartmentCreate = ({ onSubmit, isLoading, error, onSuccess, onCancel }: ApartmentCreateProps) => {
+  const [formData, setFormData] = useState<ApartmentFormData>({
+    price: 0,
+    area: 0,
+    bedrooms: 0,
+    bathrooms: 0,
+    stories: 0,
     mainroad: false,
     parking: false,
     guestroom: false,
@@ -15,20 +24,20 @@ const ApartmentCreate = ({ onSubmit, isLoading, error, onSuccess, onCancel }) =>
     hotwaterheating: false,
     airconditioning: false,
     prefarea: false,
-    furnishingstatus: "unfurnished"
+    furnishingstatus: "unfurnished" as FurnishingStatus
   });
 
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const target = e.target as HTMLInputElement;
+    const { name, value, type, checked } = target;
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
+    setFormData((prev: any) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value
+      [name]: type === "checkbox" ? checked : Number(value) || value
     }));
   };
 
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const success = await onSubmit(formData);
     if (success !== false) {

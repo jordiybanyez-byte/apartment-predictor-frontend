@@ -1,14 +1,19 @@
-import React, { useState } from 'react';
+import { useState } from "react";
+import type { Apartment, ApartmentFormData } from "../data/apartment";
 import ApartmentUpdate from "./ApartmentUpdate";
 
-const ApartmentDetail = ({ apartment, onClose, onUpdateSubmit }) => {
+interface ApartmentDetailProps {
+  apartment: Apartment;
+  onClose: () => void;
+  onUpdateSubmit: (formData: ApartmentFormData, apartmentId: number) => Promise<boolean>;
+}
+
+const ApartmentDetail = ({ apartment, onClose, onUpdateSubmit }: ApartmentDetailProps) => {
   const [isEditing, setIsEditing] = useState(false);
 
   if (!apartment) return null;
 
-  const handleEditSuccess = () => {
-    setIsEditing(false);
-  };
+  const handleEditSuccess = () => setIsEditing(false);
 
   return (
     <div className="apartment-detail-overlay">
@@ -16,77 +21,35 @@ const ApartmentDetail = ({ apartment, onClose, onUpdateSubmit }) => {
         <div className="apartment-detail-header">
           <h2>Apartment Details</h2>
           <div className="header-actions">
-            {!isEditing && (
-              <button 
-                onClick={() => setIsEditing(true)} 
-                className="edit-btn"
-              >
-                Edit
-              </button>
-            )}
+            {!isEditing && <button onClick={() => setIsEditing(true)}>Edit</button>}
             <button onClick={onClose} className="close-btn">&times;</button>
           </div>
         </div>
-        
+
         <div className="card apartment-detail-content">
           {isEditing ? (
-            <div className="edit-form-container">
-              <h3>Edit Apartment</h3>
-              <ApartmentUpdate 
-                apartment={apartment}
-                onSubmit={onUpdateSubmit}
-                onSuccess={handleEditSuccess}
-                onCancel={() => setIsEditing(false)}
-              />
-            </div>
+            <ApartmentUpdate
+              apartment={apartment}
+              onSubmit={onUpdateSubmit}
+              onSuccess={handleEditSuccess}
+              onCancel={() => setIsEditing(false)}
+            />
           ) : (
             <>
-              <div className="detail-section">
-                <h3>Basic Information</h3>
-                <div className="detail-grid">
-                  <div><strong>ID:</strong> {apartment.id}</div>
-                  <div><strong>Price:</strong> ${apartment.price}</div>
-                  <div><strong>Area:</strong> {apartment.area} sq ft</div>
-                  <div><strong>Bedrooms:</strong> {apartment.bedrooms}</div>
-                  <div><strong>Bathrooms:</strong> {apartment.bathrooms}</div>
-                  <div><strong>Stories:</strong> {apartment.stories}</div>
-                </div>
+              <div>
+                <strong>ID:</strong> {apartment.id} | <strong>Price:</strong> ${apartment.price}
               </div>
-
-              <div className="detail-section">
-                <h3>Features</h3>
-                <div className="feature-list">
-                  <div className={`feature-item ${apartment.mainroad ? 'available' : 'unavailable'}`}>
-                    Main Road: {apartment.mainroad ? 'Yes' : 'No'}
-                  </div>
-                  <div className={`feature-item ${apartment.parking ? 'available' : 'unavailable'}`}>
-                    Parking: {apartment.parking ? 'Yes' : 'No'}
-                  </div>
-                  <div className={`feature-item ${apartment.guestroom ? 'available' : 'unavailable'}`}>
-                    Guestroom: {apartment.guestroom ? 'Yes' : 'No'}
-                  </div>
-                  <div className={`feature-item ${apartment.basement ? 'available' : 'unavailable'}`}>
-                    Basement: {apartment.basement ? 'Yes' : 'No'}
-                  </div>
-                </div>
+              <div>
+                <strong>Area:</strong> {apartment.area} sq ft | <strong>Bedrooms:</strong> {apartment.bedrooms} | <strong>Bathrooms:</strong> {apartment.bathrooms} | <strong>Stories:</strong> {apartment.stories}
               </div>
-
-              <div className="detail-section">
-                <h3>Amenities</h3>
-                <div className="amenity-list">
-                  <div className={`amenity-item ${apartment.hotwaterheating ? 'available' : 'unavailable'}`}>
-                    Hot Water Heating: {apartment.hotwaterheating ? 'Yes' : 'No'}
-                  </div>
-                  <div className={`amenity-item ${apartment.airconditioning ? 'available' : 'unavailable'}`}>
-                    Air Conditioning: {apartment.airconditioning ? 'Yes' : 'No'}
-                  </div>
-                  <div className={`amenity-item ${apartment.prefarea ? 'available' : 'unavailable'}`}>
-                    Preferred Area: {apartment.prefarea ? 'Yes' : 'No'}
-                  </div>
-                  <div className="amenity-item">
-                    <strong>Furnishing Status:</strong> {apartment.furnishingstatus}
-                  </div>
-                </div>
+              <div>
+                <strong>Main Road:</strong> {apartment.mainroad} | <strong>Parking:</strong> {apartment.parking} | <strong>Guestroom:</strong> {apartment.guestroom}
+              </div>
+              <div>
+                <strong>Basement:</strong> {apartment.basement} | <strong>Hot Water Heating:</strong> {apartment.hotwaterheating} | <strong>Air Conditioning:</strong> {apartment.airconditioning} | <strong>Preferred Area:</strong> {apartment.prefarea}
+              </div>
+              <div>
+                <strong>Furnishing:</strong> {apartment.furnishingstatus}
               </div>
             </>
           )}

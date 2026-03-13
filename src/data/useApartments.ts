@@ -1,37 +1,29 @@
 import { useEffect, useState } from "react";
 import { useApartmentService } from "../middleware/apartmentServiceHooks";
+import { Apartment } from "../types/Apartment";
 
-export const useApartments = (refreshTrigger) => {
-  // State to hold apartments data, loading status, and error status
-  const [apartments, setApartments] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isAxiosError, setIsAxiosError] = useState(false);
-  
-  // Use the custom hook to get the apartment service
+export const useApartments = (refreshTrigger: number) => {
+  const [apartments, setApartments] = useState<Apartment[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isAxiosError, setIsAxiosError] = useState<boolean>(false);
+
   const apartmentService = useApartmentService();
 
-  // Fetch apartments data from the API
-  // and handle loading and error states
   const fetchApartments = async () => {
     try {
-      // Use the apartment service instead of direct axios call
-      const apartmentsData = await apartmentService.getAllApartments();
-      setApartments(apartmentsData);
+      const data: Apartment[] = await apartmentService.getAllApartments();
+      setApartments(data);
       setIsLoading(false);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error fetching apartments:", error);
-      setIsAxiosError(error.isAxiosError || false);
+      setIsAxiosError(error?.isAxiosError || false);
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      await fetchApartments();
-    };
-    fetchData();
+    fetchApartments();
   }, [refreshTrigger]);
 
-  // Return the apartments data, loading status, error status, and refetch function
   return { apartments, isLoading, isAxiosError, refetch: fetchApartments };
 };

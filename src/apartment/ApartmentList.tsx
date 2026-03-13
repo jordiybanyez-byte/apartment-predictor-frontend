@@ -1,49 +1,34 @@
-// src/apartment/ApartmentList.jsx
 import { useState } from "react";
+import type { Apartment, ApartmentFormData } from "../data/apartment";
 import { useApartments } from "../data/useApartments";
 import ApartmentUpdate from "./ApartmentUpdate";
 import ApartmentListContainer from "./ApartmentListContainer";
 import ApartmentDetail from "./ApartmentDetail";
 
-const ApartmentList = ({ refreshTrigger, onUpdateSubmit, onDelete, isDeleting }) => {
-  // Use the custom hook to get apartments data and states
+interface ApartmentListProps {
+  refreshTrigger: number;
+  onUpdateSubmit: (formData: ApartmentFormData, id: number) => Promise<boolean>;
+  onDelete: (id: number) => void;
+  isDeleting: boolean;
+}
+
+const ApartmentList = ({ refreshTrigger, onUpdateSubmit, onDelete, isDeleting }: ApartmentListProps) => {
   const { apartments, isLoading, isAxiosError } = useApartments(refreshTrigger);
-  
-  // View state management
-  const [selectedApartment, setSelectedApartment] = useState(null);
+
+  const [selectedApartment, setSelectedApartment] = useState<Apartment | null>(null);
   const [showDetail, setShowDetail] = useState(false);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
 
-  // Render loading state
-  if (isLoading) {
-    return (
-      <>
-        <h1>Apartments</h1>
-        <p>This is an exercise to test react render</p>
-        <p>Loading...</p>
-      </>
-    );
-  }
+  if (isLoading) return <p>Loading...</p>;
+  if (isAxiosError) return <p>Error loading apartments.</p>;
 
-  // Render error state
-  if (isAxiosError) {
-    return (
-      <>
-        <h1>Apartments</h1>
-        <p>This is an exercise to test react render</p>
-        <p>Error loading apartments. Please try again later.</p>
-      </>
-    );
-  }
-
-
-  const handleDetail = (apartment) => {
+  const handleDetail = (apartment: Apartment) => {
     setSelectedApartment(apartment);
     setShowDetail(true);
     setShowUpdateForm(false);
   };
 
-  const handleUpdate = (apartment) => {
+  const handleUpdate = (apartment: Apartment) => {
     setSelectedApartment(apartment);
     setShowUpdateForm(true);
     setShowDetail(false);
@@ -60,15 +45,12 @@ const ApartmentList = ({ refreshTrigger, onUpdateSubmit, onDelete, isDeleting })
     setSelectedApartment(null);
   };
 
-  // Render apartments list
   return (
     <>
       <h1>Apartments</h1>
-      <p>This is an exercise to test react render</p>
-      
+
       {showUpdateForm && selectedApartment && (
         <div className="card update-form-container">
-          <h2>Update Apartment</h2>
           <ApartmentUpdate
             apartment={selectedApartment}
             onSubmit={onUpdateSubmit}
@@ -79,14 +61,10 @@ const ApartmentList = ({ refreshTrigger, onUpdateSubmit, onDelete, isDeleting })
       )}
 
       {showDetail && selectedApartment && (
-        <ApartmentDetail 
-          apartment={selectedApartment} 
-          onClose={handleCancel}
-          onUpdateSubmit={onUpdateSubmit}
-        />
+        <ApartmentDetail apartment={selectedApartment} onClose={handleCancel} onUpdateSubmit={onUpdateSubmit} />
       )}
 
-      <ApartmentListContainer 
+      <ApartmentListContainer
         apartments={apartments}
         onDetail={handleDetail}
         onUpdate={handleUpdate}
