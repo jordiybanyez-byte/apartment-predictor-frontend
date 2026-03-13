@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from "react";
+import { createContext, useContext } from "react";
 import ApartmentApiService from "./apartmentApiService";
 
 // Create a context with ApartmentApiService as the default value

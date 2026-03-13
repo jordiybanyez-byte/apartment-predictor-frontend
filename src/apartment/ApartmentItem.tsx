@@ -1,4 +1,4 @@
-import type { Apartment } from "../data/apartment";
+import type { Apartment } from "../data/Apartment";
 import ApartmentReviewSummary from "./ApartmentReviewSummary";
 
 interface ApartmentItemProps {

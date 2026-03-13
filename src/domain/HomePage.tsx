@@ -1,12 +1,13 @@
-import React from "react";
 import { Typography } from "@mui/material";
 import apartmentNewYork from "../assets/apartmentNewYork.jpg";
 
 const baseURL = "https://albertprofedocs.s3.eu-central-1.amazonaws.com/apartment_predictor_images/";
 
 const HomePage = () => {
-  const handleImageError = (e) => {
-    e.target.src = apartmentNewYork;
+  // Cambiamos el tipo a SyntheticEvent que React espera
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>): void => {
+    // currentTarget es el <img> real
+    e.currentTarget.src = apartmentNewYork;
   };
 
   return (
@@ -30,7 +31,6 @@ const HomePage = () => {
         <Typography variant="body1" paragraph>
           Navigate through the app using the sidebar menu to manage your apartment listings.
         </Typography>
-
       </div>
     </div>
   );

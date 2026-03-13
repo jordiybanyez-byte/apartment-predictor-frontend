@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { Apartment, ApartmentFormData } from "../data/apartment";
+import type { Apartment, ApartmentFormData } from "../data/Apartment";
 import { useApartments } from "../data/useApartments";
 import ApartmentUpdate from "./ApartmentUpdate";
 import ApartmentListContainer from "./ApartmentListContainer";

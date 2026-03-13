@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useApartmentService } from "../middleware/apartmentServiceHooks";
-import { Apartment } from "../types/Apartment";
+import type { Apartment } from "../data/Apartment";
 
 export const useApartments = (refreshTrigger: number) => {
   const [apartments, setApartments] = useState<Apartment[]>([]);

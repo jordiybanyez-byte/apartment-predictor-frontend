@@ -1,5 +1,5 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
-import type { Apartment, ApartmentFormData, FurnishingStatus } from "../data/apartment";
+import type { Apartment, ApartmentFormData, FurnishingStatus } from "../data/Apartment";
 import ApartmentForm from "../components/ApartmentForm";
 
 interface ApartmentUpdateProps {

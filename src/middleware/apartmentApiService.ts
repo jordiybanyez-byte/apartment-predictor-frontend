@@ -19,7 +19,7 @@ const ApartmentApiService = {
     }
   },
 
-  getApartmentById: async (apartmentId) => {
+  getApartmentById: async (apartmentId: any) => {
     try {
       const response = await axios.get(`${API_BASE_URL}/${apartmentId}`);
       return response.data;
@@ -29,7 +29,7 @@ const ApartmentApiService = {
     }
   },
 
-  createApartment: async (apartment) => {
+  createApartment: async (apartment: any) => {
     try {
       const response = await axios.post(`${API_BASE_URL}/create`, apartment);
       return response.data;
@@ -39,7 +39,7 @@ const ApartmentApiService = {
     }
   },
 
-  updateApartment: async (apartment) => {
+  updateApartment: async (apartment: { id: any; }) => {
     try {
       const response = await axios.post(`${API_BASE_URL}/update`, apartment);
       return response.data;
@@ -49,7 +49,7 @@ const ApartmentApiService = {
     }
   },
 
-  deleteApartment: async (apartmentId) => {
+  deleteApartment: async (apartmentId: any) => {
     try {
       const response = await axios.delete(`${API_BASE_URL}/deleteById?id=${apartmentId}`);
       return response.data;

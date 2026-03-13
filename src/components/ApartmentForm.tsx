@@ -1,5 +1,5 @@
 import React from "react";
-import type { ApartmentFormData } from "../data/apartment";
+import type { ApartmentFormData } from "../data/Apartment";
 
 interface ApartmentFormProps {
   formData: ApartmentFormData;

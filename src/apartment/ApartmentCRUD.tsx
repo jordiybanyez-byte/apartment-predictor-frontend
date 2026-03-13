@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { ApartmentFormData } from "../data/apartment";
+import type { ApartmentFormData } from "../data/Apartment";
 import { useApartmentService } from "../middleware/apartmentServiceHooks";
 import ApartmentCreate from "./ApartmentCreate";
 import ApartmentList from "./ApartmentList";
