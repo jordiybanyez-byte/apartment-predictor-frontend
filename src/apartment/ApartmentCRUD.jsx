@@ -1,12 +1,10 @@
 import { useState } from "react";
-import type { ApartmentFormData } from "../data/Apartment";
 import { useApartmentService } from "../middleware/apartmentServiceHooks";
 import ApartmentCreate from "./ApartmentCreate";
 import ApartmentList from "./ApartmentList";
 
 const ApartmentCRUD = () => {
   const apartmentService = useApartmentService();
-
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -18,18 +16,22 @@ const ApartmentCRUD = () => {
     setRefreshTrigger(prev => prev + 1);
   };
 
-  const transformFormData = (data: ApartmentFormData) => ({
-    ...data,
-    mainroad: data.mainroad ? 1 : 0,
-    parking: data.parking ? 1 : 0,
-    guestroom: data.guestroom ? 1 : 0,
-    basement: data.basement ? 1 : 0,
-    hotwaterheating: data.hotwaterheating ? 1 : 0,
-    airconditioning: data.airconditioning ? 1 : 0,
-    prefarea: data.prefarea ? 1 : 0,
-  });
+  const transformFormData = (data) => {
+    return {
+      ...data,
+      // Convert parking from boolean to integer (0 or 1)
+      parking: data.parking ? 1 : 0,
+      // Convert other boolean fields to "yes"/"no" strings
+      mainroad: data.mainroad ? "yes" : "no",
+      guestroom: data.guestroom ? "yes" : "no",
+      basement: data.basement ? "yes" : "no",
+      hotwaterheating: data.hotwaterheating ? "yes" : "no",
+      airconditioning: data.airconditioning ? "yes" : "no",
+      prefarea: data.prefarea ? "yes" : "no"
+    };
+  };
 
-  const handleCreateSubmit = async (formData: ApartmentFormData) => {
+  const handleCreateSubmit = async (formData) => {
     setIsLoading(true);
     setError("");
 
@@ -37,16 +39,14 @@ const ApartmentCRUD = () => {
       const transformedData = transformFormData(formData);
       await apartmentService.createApartment(transformedData);
       handleCreateSuccess();
-      return true;
-    } catch (err: any) {
+    } catch (err) {
       setError(err.response?.data?.message || "Failed to create apartment");
-      return false;
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleUpdateSubmit = async (formData: ApartmentFormData, apartmentId: number) => {
+  const handleUpdateSubmit = async (formData, apartmentId) => {
     setIsLoading(true);
     setError("");
 
@@ -55,7 +55,7 @@ const ApartmentCRUD = () => {
       await apartmentService.updateApartment({ ...transformedData, id: apartmentId });
       setRefreshTrigger(prev => prev + 1);
       return true;
-    } catch (err: any) {
+    } catch (err) {
       setError(err.response?.data?.message || "Failed to update apartment");
       return false;
     } finally {
@@ -63,17 +63,20 @@ const ApartmentCRUD = () => {
     }
   };
 
-  const handleDelete = async (apartmentId: number) => {
-    if (!window.confirm("Are you sure you want to delete this apartment?")) return;
+  const handleDelete = async (apartmentId) => {
+    if (!window.confirm("Are you sure you want to delete this apartment?")) {
+      return;
+    }
 
     setIsDeleting(true);
     try {
       await apartmentService.deleteApartment(apartmentId);
       setRefreshTrigger(prev => prev + 1);
-    } catch (err: any) {
-      if (err.response?.status === 500) {
-        alert("Failed to delete apartment: Database constraint violation.");
-      } else if (err.response?.status === 404) {
+    } catch (error) {
+      console.error("Error deleting apartment:", error);
+      if (error.response?.status === 500) {
+        alert("Failed to delete apartment: Database constraint violation. Please contact administrator.");
+      } else if (error.response?.status === 404) {
         alert("Apartment not found or already deleted.");
       } else {
         alert("Failed to delete apartment. Please try again later.");
@@ -87,15 +90,18 @@ const ApartmentCRUD = () => {
     <div className="apartment-container">
       <div className="apartment-header">
         <h1>Apartments Management</h1>
-        <button className="create-btn" onClick={() => setShowCreateForm(!showCreateForm)}>
+        <button 
+          className="create-btn"
+          onClick={() => setShowCreateForm(!showCreateForm)}
+        >
           {showCreateForm ? "Cancel" : "Create Apartment"}
         </button>
       </div>
-
+      
       {showCreateForm && (
         <div className="card create-form-container">
           <h2>Create New Apartment</h2>
-          <ApartmentCreate
+          <ApartmentCreate 
             onSubmit={handleCreateSubmit}
             isLoading={isLoading}
             error={error}
@@ -104,13 +110,8 @@ const ApartmentCRUD = () => {
           />
         </div>
       )}
-
-      <ApartmentList
-        refreshTrigger={refreshTrigger}
-        onUpdateSubmit={handleUpdateSubmit}
-        onDelete={handleDelete}
-        isDeleting={isDeleting}
-      />
+      
+      <ApartmentList refreshTrigger={refreshTrigger} onUpdateSubmit={handleUpdateSubmit} onDelete={handleDelete} isDeleting={isDeleting} />
     </div>
   );
 };

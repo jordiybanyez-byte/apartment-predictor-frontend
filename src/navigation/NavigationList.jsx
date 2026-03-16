@@ -31,5 +31,3 @@ function NavigationList({ toggleDrawer }) {
     </List>
   );
 }
-
-export default NavigationList;
