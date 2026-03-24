@@ -1,19 +1,12 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
+import { createContext, useContext, useState } from "react";
 
-type AccordionContextType = {
-  openSection: string | null;
-  toggleSection: (section: string) => void;
-};
+const AccordionContext = createContext(undefined);
 
-const AccordionContext = createContext<AccordionContextType | undefined>(
-  undefined
-);
+export function AccordionProvider({ children }) {
+  const [openSection, setOpenSection] = useState(null);
 
-export function AccordionProvider({ children }: { children: ReactNode }) {
-  const [openSection, setOpenSection] = useState<string | null>(null);
-
-  const toggleSection = (section: string) => {
-    setOpenSection(prev => (prev === section ? null : section));
+  const toggleSection = (section) => {
+    setOpenSection((prev) => (prev === section ? null : section));
   };
 
   return (
