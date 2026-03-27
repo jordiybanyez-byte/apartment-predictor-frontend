@@ -43,7 +43,7 @@ export const initialApartments: Apartment[] = [
     images: ["/images/apt2.jpg"],
     publicTransport: ["L1", "L3", "Bus V15"],
     propertyType: "alquiler",
-    coords: [41.3870, 2.1710],
+    coords: [41.3870, 2.1730],
     description: "Loft céntrico con vistas a Plaça de Catalunya.",
   },
   {
@@ -118,7 +118,7 @@ export const initialApartments: Apartment[] = [
     images: ["/images/apt7.jpg"],
     publicTransport: ["L4", "Bus D20"],
     propertyType: "alquiler",
-    coords: [41.3804, 2.1990],
+    coords: [41.3804, 2.1950],
     description: "Disfruta de la vista al mar desde este apartamento.",
   },
   {
@@ -133,7 +133,7 @@ export const initialApartments: Apartment[] = [
     images: ["/images/apt8.jpg"],
     publicTransport: ["L1", "Bus 59"],
     propertyType: "alquiler",
-    coords: [41.3907, 2.1980],
+    coords: [41.3907, 2.1950],
     description: "Moderno piso con buena conexión de transporte.",
   },
   {
