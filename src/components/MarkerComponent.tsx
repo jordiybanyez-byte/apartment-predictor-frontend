@@ -1,6 +1,6 @@
-import React from "react";
+
 import { Marker, Popup } from "react-leaflet";
-import L, { LatLngExpression } from "leaflet";
+import L, { type LatLngExpression } from "leaflet";
 
 // Tipos
 type MarkerType = "metro" | "apartment" | string;

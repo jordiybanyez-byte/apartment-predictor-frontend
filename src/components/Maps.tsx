@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { MapContainer, TileLayer, useMap } from "react-leaflet";
 import MarkerComponent from "./MarkerComponent";
 import MetroMarkers from "./MetroMarkers";
 import "leaflet/dist/leaflet.css";
-import { LatLngExpression } from "leaflet";
+import type { LatLngExpression } from "leaflet";
 
 // Tipos
 type MetroStop = {

@@ -1,6 +1,6 @@
-import React from "react";
+
 import MarkerComponent from "./MarkerComponent";
-import { LatLngExpression } from "leaflet";
+import type { LatLngExpression } from "leaflet";
 
 // Tipos
 type MetroStop = {
