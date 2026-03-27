@@ -9,6 +9,8 @@ interface Props {
 export function ApartmentForm({ onSave, onCancel }: Props) {
   const [title, setTitle] = useState("");
   const [image, setImage] = useState("");
+  const [lat, setLat] = useState("41.387"); // coordenada por defecto
+  const [lng, setLng] = useState("2.1699"); // coordenada por defecto
 
   return (
     <div>
@@ -24,9 +26,20 @@ export function ApartmentForm({ onSave, onCancel }: Props) {
         type="text"
         placeholder="Image URL"
         value={image}
-       onChange={(e) => setImage(e.target.value)}
-     />
+        onChange={(e) => setImage(e.target.value)}
+      />
 
+      <input
+        placeholder="Latitude"
+        value={lat}
+        onChange={(e) => setLat(e.target.value)}
+      />
+
+      <input
+        placeholder="Longitude"
+        value={lng}
+        onChange={(e) => setLng(e.target.value)}
+      />
 
       <button
         onClick={() =>
@@ -42,6 +55,7 @@ export function ApartmentForm({ onSave, onCancel }: Props) {
             images: [image || "/images/placeholder.jpg"],
             publicTransport: ["L1", "Bus H10"],
             propertyType: "hipoteca",
+            coords: [parseFloat(lat), parseFloat(lng)], // coordenadas válidas
           })
         }
       >

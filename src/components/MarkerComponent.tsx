@@ -1,8 +1,8 @@
-
 import { Marker, Popup } from "react-leaflet";
 import L, { type LatLngExpression } from "leaflet";
+import HouseIconImg from "../assets/House_Icon.png";
+import MetroIconImg from "../assets/Metro_Icon.png";
 
-// Tipos
 type MarkerType = "metro" | "apartment" | string;
 
 type MarkerComponentProps = {
@@ -12,16 +12,7 @@ type MarkerComponentProps = {
 };
 
 function MarkerComponent({ position, name, type }: MarkerComponentProps) {
-  // Elegimos icono según tipo
-  let iconUrl: string;
-
-  if (type === "metro") {
-    iconUrl = "./Metro_Icon.png";
-  } else if (type === "apartment") {
-    iconUrl = "./House_Icon.png";
-  } else {
-    iconUrl = "./House_icon.png";
-  }
+  const iconUrl = type === "metro" ? MetroIconImg : HouseIconImg;
 
   const customIcon = new L.Icon({
     iconUrl,

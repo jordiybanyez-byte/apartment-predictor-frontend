@@ -9,6 +9,7 @@ import { TopBar } from "./styleMenu/TopBar";
 import { initialApartments, type Apartment } from "./data/apartments";
 import { initialReviews, type Review } from "./data/reviews";
 
+
 type View =
   | "list"
   | "detail"
@@ -34,18 +35,15 @@ export default function App() {
   const [favorites, setFavorites] = useState<string[]>([]);
   const [favoriteReviews, setFavoriteReviews] = useState<string[]>([]);
 
-  // Seleccionar apartamento
   const handleSelect = (apt: Apartment) => {
     setSelected(apt);
     setView("detail");
   };
 
-  // Eliminar apartamento
   const handleDelete = (id: string) => {
     setApartments(apartments.filter((a) => a.id !== id));
   };
 
-  // Guardar apartamento
   const handleSave = (apt: Apartment) => {
     setApartments((prev) => {
       const exists = prev.find((a) => a.id === apt.id);
@@ -55,14 +53,12 @@ export default function App() {
     setView("list");
   };
 
-  // Toggle favorito apartamento
   const toggleFavorite = (id: string) => {
     setFavorites((prev) =>
       prev.includes(id) ? prev.filter((favId) => favId !== id) : [...prev, id]
     );
   };
 
-  // Toggle favorito review
   const toggleFavoriteReview = (reviewId: string) => {
     setFavoriteReviews((prev) =>
       prev.includes(reviewId)
@@ -71,26 +67,22 @@ export default function App() {
     );
   };
 
-  // Ver reviews
   const handleViewReviews = (apt: Apartment) => {
     setSelected(apt);
     setView("reviews");
   };
 
-  // Guardar review
   const handleSaveReview = (review: Review) => {
     setReviews((prev) => [...prev, review]);
     setView("myReviews");
   };
 
-  // FILTRO POR CATEGORÍA
   const filteredApartments = category
     ? apartments.filter((apt) => apt.propertyType === category)
     : apartments;
 
   return (
     <div className="app-container">
-      {/* TOP BAR */}
       <TopBar
         selectedCategory={category}
         onSelectCategory={(cat) => {
@@ -109,7 +101,6 @@ export default function App() {
 
       <MenuForm onSelectView={(v: View) => setView(v)} />
 
-      {/* Lista de apartamentos con paginación */}
       {(view === "list" || view === "apartments") && (
         <ApartmentList
           apartments={filteredApartments}
@@ -121,7 +112,6 @@ export default function App() {
         />
       )}
 
-      {/* Favoritos */}
       {view === "favorites" && (
         <ApartmentList
           apartments={filteredApartments.filter((apt) =>
@@ -135,7 +125,6 @@ export default function App() {
         />
       )}
 
-      {/* Detalle */}
       {view === "detail" && selected && (
         <>
           <ApartmentDetail
@@ -147,12 +136,10 @@ export default function App() {
         </>
       )}
 
-      {/* Formulario apartamento */}
       {view === "form" && (
         <ApartmentForm onSave={handleSave} onCancel={() => setView("list")} />
       )}
 
-      {/* Añadir review */}
       {view === "addReview" && selected && (
         <ApartmentReviewForm
           apartment={selected}
@@ -161,7 +148,6 @@ export default function App() {
         />
       )}
 
-      {/* Reviews apartamento */}
       {view === "reviews" && selected && (
         <ApartmentReview
           apartment={selected}
@@ -172,7 +158,6 @@ export default function App() {
         />
       )}
 
-      {/* Reviews favoritas */}
       {view === "favoriteReviews" && (
         <ApartmentReview
           apartment={undefined}
@@ -183,7 +168,6 @@ export default function App() {
         />
       )}
 
-      {/* Mis Reviews */}
       {view === "myReviews" && (
         <ApartmentReview
           apartment={undefined}

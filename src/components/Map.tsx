@@ -5,27 +5,13 @@ import MetroMarkers from "./MetroMarkers";
 import "leaflet/dist/leaflet.css";
 import type { LatLngExpression } from "leaflet";
 
-// Tipos
-type MetroStop = {
-  name: string;
-  coords: LatLngExpression;
-};
+type MetroStop = { name: string; coords: LatLngExpression };
+type Apartment = { id: string | number; title: string; coords: LatLngExpression };
 
-type Apartment = {
-  id: string | number;
-  title: string;
-  coords: LatLngExpression;
-};
+type ChangeViewProps = { center: LatLngExpression };
+type MapProps = { apartments: Apartment[]; selectedApartment?: Apartment | null };
 
-type ChangeViewProps = {
-  center: LatLngExpression;
-};
-
-type MapProps = {
-  apartments: Apartment[];
-  selectedApartment?: Apartment | null;
-};
-
+// Metro stops ejemplo
 const metroStops: MetroStop[] = [
   { name: "Plaça de Catalunya", coords: [41.387, 2.1699] },
   { name: "Passeig de Gràcia", coords: [41.3932, 2.1663] },
@@ -39,47 +25,30 @@ const metroStops: MetroStop[] = [
   { name: "Marina", coords: [41.3907, 2.1952] },
 ];
 
-// Centrar mapa en apartamento
 function ChangeView({ center }: ChangeViewProps) {
   const map = useMap();
-
   useEffect(() => {
-    if (center) {
-      map.setView(center, 15);
-    }
+    if (center) map.setView(center, 15);
   }, [center, map]);
-
   return null;
 }
 
 function Map({ apartments, selectedApartment }: MapProps) {
   return (
     <MapContainer
-      center={[41.3795, 2.1915]}
+      center={selectedApartment?.coords || [41.3795, 2.1915]}
       zoom={13}
       style={{ width: "100%", height: "100%" }}
     >
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
-      {selectedApartment && (
-        <ChangeView center={selectedApartment.coords} />
-      )}
+      {selectedApartment && <ChangeView center={selectedApartment.coords} />}
 
-      {/* Marcadores de apartamentos */}
       {apartments.map((apt) => (
-        <MarkerComponent
-          key={apt.id}
-          position={apt.coords}
-          name={apt.title}
-          type="apartment"
-        />
+        <MarkerComponent key={apt.id} position={apt.coords} name={apt.title} type="apartment" />
       ))}
 
-      {/* Marcadores de metro */}
-      <MetroMarkers
-        selectedApartment={selectedApartment}
-        metroStops={metroStops}
-      />
+      <MetroMarkers selectedApartment={selectedApartment} metroStops={metroStops} />
     </MapContainer>
   );
 }
