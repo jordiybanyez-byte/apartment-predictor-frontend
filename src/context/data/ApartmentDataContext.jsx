@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { useApartmentService } from '../middleware/apartmentServiceHooks';
+import { useApartmentService } from '../middleware/apartment/apartmentServiceHooks';
 
 const ApartmentDataContext = createContext();
 
